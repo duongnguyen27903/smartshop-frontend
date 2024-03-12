@@ -1,5 +1,5 @@
 import React from "react";
-import { categories } from "../router/path";
+import { categories } from "../router/menu";
 import { NavLink } from "react-router-dom";
 
 const Tabs = () => {

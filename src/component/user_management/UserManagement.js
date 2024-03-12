@@ -1,6 +1,6 @@
 import React from "react";
-import Account from "./Account";
-import Cart from "./Cart";
+import Account from "./AccountButton";
+import Cart from "./CartButton";
 
 const UserManagement = ({ className }) => {
   return (

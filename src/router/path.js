@@ -1,35 +1,20 @@
-export const paths = [
-  {
-    name: "Cart",
-    path: "/your_cart",
-  },
-  {
-    name: "Sign In",
-    path: "/signin",
-  },
-  {
-    name: "Sign Up",
-    path: "/signup",
-  },
-];
+import Cart from "../layout/Cart";
+import HeaderOnly from "../layout/HeaderOnly";
+import Category from "../pages/Category";
+import Home from "../pages/Home";
 
-export const categories = [
+export const routes = [
   {
-    name: "Vehicles",
-    path: "/vehicles",
+    path: "",
+    element: Home,
   },
   {
-    name: "Fashion",
-    path: "/fashion",
+    path: "/:category",
+    element: Category,
   },
   {
-    name: "Food",
-    path: "/food",
-  },
-];
-
-export const menu = [
-  {
-    category: categories,
+    path: "/cart",
+    element: Cart,
+    layout: HeaderOnly,
   },
 ];

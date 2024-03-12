@@ -1,22 +1,30 @@
-import { useRoutes } from "react-router-dom";
 import MainLayout from "./layout/MainLayout";
-import Home from "./pages/Home";
-import SignIn from "./authen/SignIn";
-import SignUp from "./authen/SignUp";
-import Category from "./pages/Category";
+import { Routes, Route } from "react-router-dom";
+import { routes } from "./router/path";
+import { Fragment } from "react";
 
 function App() {
-  const elements = useRoutes([
-    {
-      path: "",
-      element: <Home />,
-    },
-    {
-      path: "/:category",
-      element: <Category />,
-    },
-  ]);
-  return <MainLayout>{elements}</MainLayout>;
+  // const elements = useRoutes(paths);
+  return (
+    <Routes>
+      {routes.map((route, index) => {
+        const Page = route.element;
+        let Layout = MainLayout;
+        if (route.layout) {
+          Layout = route.layout;
+        } else if (route.layout === null) {
+          Layout = Fragment;
+        }
+        return (
+          <Route
+            key={index}
+            path={route.path}
+            element={<Layout>{<Page />}</Layout>}
+          />
+        );
+      })}
+    </Routes>
+  );
 }
 
 export default App;
