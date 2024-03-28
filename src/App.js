@@ -5,6 +5,7 @@ import { Fragment } from "react";
 
 function App() {
   // const elements = useRoutes(paths);
+
   return (
     <Routes>
       {routes.map((route, index) => {

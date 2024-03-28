@@ -1,8 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import { useNavigate } from "react-router-dom";
 
 const Authen = ({ isOpen, close_popup }) => {
+  const navigate = useNavigate();
+  const user = localStorage.getItem("user");
+  useEffect(() => {
+    if (user) {
+      navigate("/account");
+    }
+  }, [user, navigate]);
+
   const [isLoginForm, SetIsLoginForm] = useState(true);
   function changeForm() {
     SetIsLoginForm(!isLoginForm);

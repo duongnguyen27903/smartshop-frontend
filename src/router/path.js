@@ -1,3 +1,5 @@
+import Account from "../component/Account";
+import Product from "../component/Product";
 import Cart from "../layout/Cart";
 import HeaderOnly from "../layout/HeaderOnly";
 import Category from "../pages/Category";
@@ -9,8 +11,17 @@ export const routes = [
     element: Home,
   },
   {
-    path: "/:category",
+    path: "account",
+    element: Account,
+    layout: HeaderOnly,
+  },
+  {
+    path: "/:brand/:brandId",
     element: Category,
+  },
+  {
+    path: "/:brand/:brandId/:id",
+    element: Product,
   },
   {
     path: "/cart",

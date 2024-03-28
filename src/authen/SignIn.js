@@ -1,12 +1,32 @@
 import React, { useState } from "react";
-
+import { api } from "../api/api";
+import { useNavigate } from "react-router-dom";
 const SignIn = ({ close_popup, to_signup }) => {
+  const navigate = useNavigate();
   const [signin, setSignin] = useState({
     email: "",
     password: "",
   });
   function handleChange(e) {
     setSignin({ ...signin, [e.target.name]: e.target.value });
+  }
+
+  function signinRequest() {
+    api
+      .post("auth/login", signin)
+      .then((res) => {
+        localStorage.setItem("user", JSON.stringify(res.data));
+        window.location.reload();
+      })
+      .catch((err) => {
+        alert(
+          "Error : " +
+            err.response.data.error +
+            "\n" +
+            "Message : " +
+            err.response.data.message
+        );
+      });
   }
 
   return (
@@ -75,7 +95,10 @@ const SignIn = ({ close_popup, to_signup }) => {
               />
             </div>
 
-            <button className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm my-3 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <button
+              onClick={signinRequest}
+              className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm my-3 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
               Login to your account
             </button>
             <div className="text-sm font-medium text-gray-500 dark:text-gray-300">

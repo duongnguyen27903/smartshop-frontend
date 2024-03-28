@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-
+import { api } from "../api/api";
+import { useNavigate } from "react-router-dom";
 const SignUp = ({ close_popup, to_signin }) => {
+  const navigate = useNavigate();
   const [signup, setSignup] = useState({
     username: "",
     email: "",
     password: "",
+    phone_number: "",
   });
   const [check_password, setCheck_password] = useState("");
   function handleCheckPasswordChange(e) {
@@ -14,7 +17,26 @@ const SignUp = ({ close_popup, to_signin }) => {
     setSignup({ ...signup, [e.target.name]: e.target.value });
   }
   function signupRequest() {
-    console.log(signup.password === check_password);
+    if (signup.password !== check_password) {
+      alert("re-enter your right password");
+      return;
+    }
+    api
+      .post("auth/signup?role=user", signup)
+      .then((res) => {
+        console.log(res.data);
+        alert(res.data.status + " " + res.data.message);
+        navigate("/");
+      })
+      .catch((err) => {
+        alert(
+          "Error : " +
+            err.response.data.error +
+            "\n" +
+            "Message : " +
+            err.response.data.message
+        );
+      });
   }
   return (
     <div
@@ -22,7 +44,7 @@ const SignUp = ({ close_popup, to_signin }) => {
       aria-hidden="true"
       className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
     >
-      {console.log(signup.password === check_password)}
+      {console.log(signup)}
       <div className="relative p-4 w-full max-w-md max-h-full">
         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
           <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
@@ -53,6 +75,21 @@ const SignUp = ({ close_popup, to_signin }) => {
           <div className="p-4 md:p-5">
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Your email
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                placeholder="name@company.com"
+                required
+                value={signup.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Your username
               </label>
               <input
@@ -68,19 +105,20 @@ const SignUp = ({ close_popup, to_signin }) => {
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Your email
+                Your phone number
               </label>
               <input
-                type="email"
-                name="email"
-                id="email"
+                type="text"
+                name="phone_number"
+                id="phone_number"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                placeholder="name@company.com"
+                placeholder="098***"
                 required
-                value={signup.email}
+                value={signup.phone_number}
                 onChange={handleChange}
               />
             </div>
+
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Your password
