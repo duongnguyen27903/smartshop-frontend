@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { api } from "../api/api";
-import { useNavigate } from "react-router-dom";
+
+export const errorform = (err) =>
+  "Error : " +
+  err.response.data.error +
+  "\n" +
+  "Message : " +
+  err.response.data.message;
+
 const SignIn = ({ close_popup, to_signup }) => {
-  const navigate = useNavigate();
   const [signin, setSignin] = useState({
     email: "",
     password: "",
@@ -19,13 +25,7 @@ const SignIn = ({ close_popup, to_signup }) => {
         window.location.reload();
       })
       .catch((err) => {
-        alert(
-          "Error : " +
-            err.response.data.error +
-            "\n" +
-            "Message : " +
-            err.response.data.message
-        );
+        alert(errorform(err));
       });
   }
 

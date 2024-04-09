@@ -8,16 +8,16 @@ const Header = () => {
     navigate("/");
   }
   return (
-    <div className="flex flex-row m-5 gap-3">
+    <div className="flex flex-row m-5 gap-4">
       <div
-        className="flex flex-col place-items-center font-bold text-3xl"
+        className="flex flex-row place-items-center font-bold text-3xl hover:animate-bounce"
         onClick={NavHome}
       >
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500 ">
-          SMART
+        <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-500 to-black ">
+          Duong
         </span>
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-500 to-pink-500 ">
-          SHOP
+        <span className="bg-clip-text text-transparent bg-gradient-to-r from-black to-yellow-500 ">
+          Auto
         </span>
       </div>
       <div className="flex flex-row grow">

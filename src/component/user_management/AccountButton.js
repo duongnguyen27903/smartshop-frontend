@@ -7,8 +7,7 @@ const Account = () => {
     SetIsopen(!isopen);
   }
   return (
-    <div>
-      {isopen && <Authen isOpen={isopen} close_popup={openSignInPopup} />}
+    <div className="relative">
       <button
         className="group flex flex-row text-xl font-medium items-center p-2 border rounded-lg hover:bg-blue-600 focus:bg-blue-500"
         onClick={openSignInPopup}
@@ -32,6 +31,7 @@ const Account = () => {
           Account
         </div>
       </button>
+      {isopen && <Authen isOpen={isopen} close_popup={openSignInPopup} />}
     </div>
   );
 };

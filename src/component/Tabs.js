@@ -54,7 +54,7 @@ const Item = ({ item }) => {
       className={`capitalize font-medium font-serif hover:bg-black hover:text-white h-20 w-full`}
     >
       <NavLink
-        to={`/${item.name}/${item.id}`}
+        to={`/${item.id}`}
         className={({ isActive }) => {
           const activeClass = isActive ? "bg-gray-400" : "";
           return `${activeClass} h-full w-full text-xl flex justify-center items-center`;

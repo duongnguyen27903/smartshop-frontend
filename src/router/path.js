@@ -1,4 +1,4 @@
-import Account from "../component/Account";
+import Account from "../component/account/Account";
 import Product from "../component/Product";
 import Cart from "../layout/Cart";
 import HeaderOnly from "../layout/HeaderOnly";
@@ -16,11 +16,11 @@ export const routes = [
     layout: HeaderOnly,
   },
   {
-    path: "/:brand/:brandId",
+    path: "/:brandId",
     element: Category,
   },
   {
-    path: "/:brand/:brandId/:id",
+    path: "/:brandId/:id",
     element: Product,
   },
   {
