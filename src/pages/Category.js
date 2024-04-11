@@ -13,8 +13,14 @@ const Card = (products) => {
   return (
     <div className="p-2" onClick={handleClick}>
       <div className="text-2xl h-16 p-2">{name}</div>
-      <img src={image.img} alt={`${name}-img`} className="object-center h-30" />
-      <div className="text-2xl">Price : {`$${price}`}</div>
+      <img
+        src={image.img}
+        alt={`${name}-img`}
+        className="object-cover w-full h-3/5"
+      />
+      <div className="text-2xl">
+        Price : {`$${Number(price).toLocaleString()}`}
+      </div>
     </div>
   );
 };

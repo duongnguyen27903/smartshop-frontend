@@ -102,7 +102,7 @@ const Product = () => {
             </div>
 
             <div>Price</div>
-            <div>${amount * data.price}</div>
+            <div>${Number(amount * data.price).toLocaleString()}</div>
 
             <button
               onClick={handleAddToCart}

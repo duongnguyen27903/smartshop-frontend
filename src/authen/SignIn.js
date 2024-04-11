@@ -3,10 +3,10 @@ import { api } from "../api/api";
 
 export const errorform = (err) =>
   "Error : " +
-  err.response.data.error +
+  err?.response?.data?.error +
   "\n" +
   "Message : " +
-  err.response.data.message;
+  err?.response?.data?.message;
 
 const SignIn = ({ close_popup, to_signup }) => {
   const [signin, setSignin] = useState({

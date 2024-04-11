@@ -42,7 +42,6 @@ const Cart = () => {
 export default Cart;
 
 const Item = ({ item, info }) => {
-  console.log(item);
   const { cart_id, id, image, name, price, amount, brandId } = item;
   const navigate = useNavigate();
 
@@ -75,7 +74,7 @@ const Item = ({ item, info }) => {
       <div className="flex flex-row justify-between grow">
         <div onClick={handleClick} className="">
           <div>{name}</div>
-          <div>${price * amount}</div>
+          <div>${Number(price * amount).toLocaleString()}</div>
           <div>Quantity : {amount}</div>
         </div>
         <button
