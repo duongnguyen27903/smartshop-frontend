@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { api } from "../api/api";
+import { api, auth_api } from "../api/api";
 import { errorform } from "../authen/SignIn";
 const Product = () => {
   const { id } = useParams();
-
+  const [data, setData] = useState();
   useEffect(() => {
     api
       .get(`shop/get_detail_product?id=${id}`)
@@ -16,9 +16,21 @@ const Product = () => {
       });
   }, [id]);
   const searchParams = new URLSearchParams(window.location.search);
-  const [data, setData] = useState();
-  const [amount, setAmount] = useState(Number(searchParams.get("amount")) || 1);
 
+  const [amount, setAmount] = useState(() => {
+    let val = Number(searchParams.get("amount"));
+    if (!val) return 1;
+    if (val > data?.quantity) {
+      return data?.quantity;
+    }
+    return val;
+  });
+
+  if (data) {
+    if (amount > data.quantity) {
+      setAmount(Number(data.quantity));
+    }
+  }
   function handleIncrease(a) {
     setAmount(amount + a);
   }
@@ -52,6 +64,22 @@ const Product = () => {
       });
   }
 
+  function handlePurchase() {
+    auth_api
+      .post("account/buy_product", {
+        productId: Number(id),
+        userId: info?.user.id,
+        product_amount: amount,
+      })
+      .then((res) => {
+        alert(res.data);
+        window.location.reload();
+      })
+      .catch((err) => {
+        alert(errorform(err));
+      });
+  }
+
   if (data)
     return (
       <div className="m-8 text-3xl font-serif">
@@ -68,7 +96,7 @@ const Product = () => {
           </div>
           <div className="w-1/3 grid grid-cols-2 place-items-center">
             <div>Available</div>
-            <div>{data.available_quantity}</div>
+            <div>{data.quantity}</div>
 
             <div>Quantity</div>
             <div className="flex flex-row gap-3 items-center cursor-pointer">
@@ -87,12 +115,12 @@ const Product = () => {
               </button>
               <div>{amount}</div>
               <button
-                disabled={amount >= data.available_quantity}
+                disabled={amount >= data.quantity}
                 onClick={() => {
                   handleIncrease(1);
                 }}
                 className={` h-9 w-9 flex justify-center ${
-                  amount === data.available_quantity
+                  amount === data.quantity
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-orange-300"
                 }`}
@@ -110,7 +138,10 @@ const Product = () => {
             >
               Add to cart
             </button>
-            <button className="col-span-2 w-full h-full hover:bg-black hover:text-white m-2">
+            <button
+              onClick={handlePurchase}
+              className="col-span-2 w-full h-full hover:bg-black hover:text-white m-2"
+            >
               Purchase
             </button>
           </div>

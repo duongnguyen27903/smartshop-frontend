@@ -29,7 +29,7 @@ const Authen = ({ isOpen, close_popup, className }) => {
   }
 
   function handleLogout() {
-    localStorage.removeItem("user");
+    localStorage.clear();
     alert("you are back to home page");
     navigate("/");
   }
