@@ -11,7 +11,7 @@ const Card = (products) => {
   }
 
   return (
-    <div className="p-2" onClick={handleClick}>
+    <div className="p-2 cursor-pointer" onClick={handleClick}>
       <div className="text-2xl h-16 p-2">{name}</div>
       <img
         src={image.img}
@@ -42,7 +42,7 @@ const Category = () => {
   }, [brandId]);
 
   return (
-    <div className="m-5 grid lg:grid-cols-3 lg:gap-12 md:grid-cols-1 gap-2 font-serif">
+    <div className="m-5 grid lg:grid-cols-3 lg:gap-4 md:grid-cols-1 gap-2 font-serif">
       {data &&
         data.map((products, index) => {
           return <Card products={products} key={index} />;

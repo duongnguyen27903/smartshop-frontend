@@ -5,7 +5,7 @@ import Cart from "./CartButton";
 const UserManagement = ({ className }) => {
   return (
     <div className={className}>
-      <div className="p-2 flex flex-row justify-end gap-2">
+      <div className="h-full flex flex-row justify-end mr-2">
         <Account />
         <Cart />
       </div>

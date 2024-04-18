@@ -1,6 +1,7 @@
 import Account from "../component/account/Account";
+import Cart from "../component/Cart";
 import Product from "../component/Product";
-import Cart from "../layout/Cart";
+
 import HeaderOnly from "../layout/HeaderOnly";
 import Category from "../pages/Category";
 import Home from "../pages/Home";

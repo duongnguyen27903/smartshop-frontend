@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 const LogoutForm = ({ username, onClick }) => {
   return (
-    <div className="absolute flex bg-blue-100 flex-col">
+    <div className="absolute right-0 flex bg-blue-100 flex-col">
       <div className="p-2 text-xl w-48">Helo {username}</div>
-      <button className="p-2 text-xl text-red-500 w-48" onClick={onClick}>
-        Log out
+      <button className="p-2 text-xl text-red-500 w-48 " onClick={onClick}>
+        <p className="hover:animate-[shake_1s_linear_infinite]">Log out</p>
       </button>
     </div>
   );
@@ -46,7 +46,11 @@ const Authen = ({ isOpen, close_popup, className }) => {
     );
 
   return (
-    <div className={`bg-black/20 fixed inset-0 ${isOpen ? "block" : "hidden"}`}>
+    <div
+      className={`bg-black/20 z-50 fixed inset-0 ${
+        isOpen ? "block" : "hidden"
+      }`}
+    >
       {isLoginForm ? (
         <SignIn close_popup={close_popup} to_signup={changeForm} />
       ) : (

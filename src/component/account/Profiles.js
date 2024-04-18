@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { api } from "../../api/api";
+import { api, auth_api } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { errorform } from "../../authen/SignIn";
 
@@ -76,12 +76,36 @@ const Profile = () => {
   function handleUpdate(e) {
     e.preventDefault();
     if (Object.keys(update_profile).length !== 0) {
-      console.log("send update profile api", update_profile);
+      auth_api
+        .post("user-profile/save-profile", {
+          ...profile,
+          userId: info?.user.id,
+        })
+        .then((res) => {
+          window.location.reload();
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       console.log("no update profile");
     }
     if (Object.keys(update_user).length !== 0) {
-      console.log("send update user api", update_user);
+      console.log(user.phone_number);
+      auth_api
+        .post("user-profile/update_user", {
+          password: user.password,
+          username: user.username,
+          phone_number: user.phone_number || null,
+          id: info.user.id,
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       console.log("no update user");
     }
@@ -118,7 +142,7 @@ const Profile = () => {
             onChange={handleUserChange}
           />
           <button
-            className="bg-red-500 "
+            className="hover:animate-[shake_1s_infinite] "
             onClick={(e) => {
               e.preventDefault();
               setShowPassword(!showPassword);

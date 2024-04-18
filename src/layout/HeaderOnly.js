@@ -3,11 +3,11 @@ import Header from "../component/Header";
 
 const HeaderOnly = ({ children }) => {
   return (
-    <div className="bg-slate-200">
-      <div className="border cursor-pointer bg-white ">
+    <div className="relative h-screen font-serif">
+      <div className="sticky top-0 h-1/6 bg-white ring-1 border cursor-pointer ">
         <Header />
       </div>
-      <div className="my-2 p-2 bg-white">{children}</div>
+      <div className="h-5/6 p-2">{children}</div>
     </div>
   );
 };

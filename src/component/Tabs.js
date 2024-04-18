@@ -34,7 +34,7 @@ const Pack = ({ category }) => {
   return (
     <div className={`flex flex-col group`}>
       <div
-        className="grow font-serif flex justify-center items-center h-20 uppercase text-xl hover:bg-black hover:text-white"
+        className="grow font-serif flex justify-center items-center h-20 uppercase text-xl text-sky-600 hover:bg-black hover:text-white"
         onClick={handleOpen}
       >
         {category.main}

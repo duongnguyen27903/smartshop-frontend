@@ -8,13 +8,13 @@ const Cart = () => {
   }
   return (
     <button
-      className="group flex flex-row items-center rounded-lg p-2 gap-2 border hover:bg-blue-600 focus:bg-blue-500"
+      className="group text-2xl font-medium h-full flex justify-center items-center w-40 p-2 focus:bg-black hover:bg-black"
       onClick={ToCart}
     >
-      <div className="text-xl font-medium group-focus:text-white group-hover:text-white">
+      <div className="group-hover:text-white w-fit group-focus:text-white group text-sky-600 transition duration-300">
         Cart
+        <span className="block max-w-0 group-hover:max-w-full group-focus:max-w-full transition-all duration-500 h-[1px] bg-white"></span>
       </div>
-      <div className="text-xl font-semibold text-orange-500">0</div>
     </button>
   );
 };

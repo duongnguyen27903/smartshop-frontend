@@ -25,6 +25,31 @@ const Currency = () => {
   }
 
   const [account, setAccount] = useState();
+  const [amount, setAmount] = useState(0);
+  function handleChange(e) {
+    setAmount(e.target.value);
+  }
+  function charge() {
+    if (amount < 0) {
+      alert("charge at least $1");
+      return;
+    } else if (amount > 10000000) {
+      alert("charge less than $10,000,000");
+      return;
+    }
+    auth_api
+      .patch(
+        `account/charge?userId=${info?.user.id}&amount=${amount}`,
+        undefined
+      )
+      .then((res) => {
+        setAccount(res?.data[0]);
+        setAmount(0);
+      })
+      .catch((err) => {
+        alert(errorform(err));
+      });
+  }
   useEffect(() => {
     api
       .get(`account/get_current?userId=${info?.user.id}`, {
@@ -55,7 +80,28 @@ const Currency = () => {
           {`$${Number(account?.account_balance).toLocaleString()}`}
         </div>
         <div>
-          <Recharge userId={info?.user.id} />
+          <div className="h-full flex flex-col gap-2 place-items-center m-4">
+            <div className="text-2xl">Recharge</div>
+            <div className="relative z-0 w-full mb-5 group">
+              <input
+                className="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=""
+                value={amount || ""}
+                onChange={handleChange}
+                required
+              />
+              <label className="peer-focus:font-medium absolute text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                Enter the number
+              </label>
+              <div>$0 ~ $10,000,000</div>
+            </div>
+            <button
+              onClick={charge}
+              className="w-full p-4 m-2 ring-2 shadow-lg shadow-blue-300 border-2 hover:bg-blue-300 "
+            >
+              <div className="animate-highlight">Charge</div>
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -75,56 +121,3 @@ const Currency = () => {
 };
 
 export default Currency;
-
-const Recharge = ({ userId }) => {
-  const [amount, setAmount] = useState(0);
-
-  function handleChange(e) {
-    setAmount(e.target.value);
-  }
-
-  function charge() {
-    if (amount < 0) {
-      alert("charge at least $1");
-      return;
-    } else if (amount > 10000000) {
-      alert("charge less than $10,000,000");
-      return;
-    }
-    auth_api
-      .patch(`account/charge?userId=${userId}&amount=${amount}`, undefined)
-      .then((res) => {
-        window.location.reload();
-      })
-      .catch((err) => {
-        alert(errorform(err));
-      });
-  }
-
-  return (
-    <div>
-      <div className="h-full flex flex-col gap-2 place-items-center m-4">
-        <div className="text-2xl">Recharge</div>
-        <div className="relative z-0 w-full mb-5 group">
-          <input
-            className="block py-2.5 px-0 w-full text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-            placeholder=""
-            value={amount || ""}
-            onChange={handleChange}
-            required
-          />
-          <label className="peer-focus:font-medium absolute text-xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-            Enter the number
-          </label>
-          <div>$0 ~ $10,000,000</div>
-        </div>
-        <button
-          onClick={charge}
-          className="w-full p-4 m-2 ring-2 shadow-lg shadow-blue-300 border-2 hover:bg-blue-300 "
-        >
-          <div className="animate-highlight">Charge</div>
-        </button>
-      </div>
-    </div>
-  );
-};
