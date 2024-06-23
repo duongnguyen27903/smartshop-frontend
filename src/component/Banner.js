@@ -9,7 +9,7 @@ const Banner = () => {
   const [chose, setChose] = useState(1);
   useEffect(() => {
     api
-      .get("shop/get_best_seller")
+      .get("api/shop/get_best_seller")
       .then((res) => {
         setData(res.data);
       })
@@ -22,17 +22,19 @@ const Banner = () => {
       <div className="relative z-0 w-full h-full overflow-hidden">
         <img
           onClick={() => {
-            navigate(`${data[chose].brandid}/${data[chose].id}`);
+            navigate(`${data[chose]?.brandid}/${data[chose]?.id}`);
           }}
           className="absolute z-0 h-full w-full object-cover "
-          src={data[chose].image.img}
+          src={data[chose]?.image.img}
           alt="sieu xe"
         />
         <div className="absolute left-5 top-5 animate-[changecolor_2s_infinite] text-6xl">
-          {data[chose].name}
+          {data[chose]?.name}
         </div>
-        <div className="absolute text-5xl italic bg-red-600 text-yellow-300 h-72 w-72 rounded-full -right-36 -top-36">
-          <span className="absolute left-10 bottom-16">Hot!</span>
+        <div className="absolute text-5xl italic bg-red-600 text-yellow-300 h-36 w-36 rounded-bl-full right-0 top-0">
+          <span className="absolute left-1/4 right-1/4 top-1/4 bottom-1/4">
+            Hot!
+          </span>
         </div>
         <div className="absolute right-0 bottom-5 flex flex-row group">
           {data

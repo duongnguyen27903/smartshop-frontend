@@ -7,7 +7,7 @@ const Tabs = () => {
 
   useEffect(() => {
     api
-      .get("shop/get_categories")
+      .get("api/shop/get_categories")
       .then((res) => {
         setCategories(res.data);
       })
