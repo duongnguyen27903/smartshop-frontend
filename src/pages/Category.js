@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { api } from "../api/api";
+import { api, getProducts } from "../api/api";
 import { useNavigate } from "react-router-dom";
 
 const Card = (products) => {
@@ -32,8 +32,7 @@ const Category = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    api
-      .get(`shop/get_products?id=${brandId}`)
+    getProducts(brandId)
       .then((res) => {
         setData(res.data);
       })

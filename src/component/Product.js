@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { api, auth_api } from "../api/api";
+import { api, auth_api, getDetailProduct } from "../api/api";
 import { errorform } from "../authen/SignIn";
 const Product = () => {
   const { id } = useParams();
   const [data, setData] = useState();
   useEffect(() => {
-    api
-      .get(`shop/get_detail_product?id=${id}`)
+    getDetailProduct(id)
       .then((res) => {
         setData(res.data[0]);
       })

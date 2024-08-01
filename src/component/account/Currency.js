@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../App.css";
-import { api, auth_api } from "../../api/api";
+import { api, auth_api, getCurrent } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { errorform } from "../../authen/SignIn";
 
@@ -38,10 +38,7 @@ const Currency = () => {
       return;
     }
     auth_api
-      .patch(
-        `account/charge?userId=${info?.user.id}&amount=${amount}`,
-        undefined
-      )
+      .patch(`account/charge?userId=${info?.user.id}&amount=${amount}`)
       .then((res) => {
         setAccount(res?.data[0]);
         setAmount(0);
@@ -51,12 +48,7 @@ const Currency = () => {
       });
   }
   useEffect(() => {
-    api
-      .get(`account/get_current?userId=${info?.user.id}`, {
-        headers: {
-          Authorization: "Bearer " + info?.accessToken,
-        },
-      })
+    getCurrent(info?.user.id)
       .then((res) => {
         setAccount(res?.data[0]);
         localStorage.setItem(

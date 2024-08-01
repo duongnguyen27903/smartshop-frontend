@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { api } from "../api/api";
+import { login_action } from "../api/api";
 
 export const errorform = (err) =>
   "Error : " +
@@ -18,8 +18,7 @@ const SignIn = ({ close_popup, to_signup }) => {
   }
 
   function signinRequest() {
-    api
-      .post("auth/login", signin)
+    login_action(signin)
       .then((res) => {
         localStorage.setItem("user", JSON.stringify(res.data));
         window.location.reload();

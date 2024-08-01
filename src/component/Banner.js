@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { api } from "../api/api";
+import { api, getBestSeller } from "../api/api";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 
@@ -8,8 +8,7 @@ const Banner = () => {
   const navigate = useNavigate();
   const [chose, setChose] = useState(1);
   useEffect(() => {
-    api
-      .get("api/shop/get_best_seller")
+    getBestSeller()
       .then((res) => {
         setData(res.data);
       })

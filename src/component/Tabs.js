@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { api } from "../api/api";
+import { getCategories } from "../api/api";
 
 const Tabs = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    api
-      .get("api/shop/get_categories")
+    getCategories()
       .then((res) => {
         setCategories(res.data);
       })
