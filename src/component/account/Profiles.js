@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { api, auth_api } from "../../api/api";
+import { api, auth_api, getProfile } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { errorform } from "../../authen/SignIn";
 
@@ -22,12 +22,7 @@ const Profile = () => {
     address: "",
   });
   useEffect(() => {
-    api
-      .get(`user-profile/get-profile?id=${info?.user.id}`, {
-        headers: {
-          Authorization: "Bearer " + info?.accessToken,
-        },
-      })
+    getProfile(info?.user.id)
       .then((res) => {
         setProfile((prev) => {
           const add = res.data[0];
@@ -77,7 +72,7 @@ const Profile = () => {
     e.preventDefault();
     if (Object.keys(update_profile).length !== 0) {
       auth_api
-        .post("user-profile/save-profile", {
+        .post("api/user-profile/save-profile", {
           ...profile,
           userId: info?.user.id,
         })
@@ -94,7 +89,7 @@ const Profile = () => {
     if (Object.keys(update_user).length !== 0) {
       console.log(user.phone_number);
       auth_api
-        .post("user-profile/update_user", {
+        .post("api/user-profile/update_user", {
           password: user.password,
           username: user.username,
           phone_number: user.phone_number || null,

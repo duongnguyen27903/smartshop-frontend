@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "../../App.css";
-import { api, auth_api, getCurrent } from "../../api/api";
+import {
+  api,
+  auth_api,
+  charge_money,
+  createPaymentAccount,
+  getCurrent,
+} from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { errorform } from "../../authen/SignIn";
 
@@ -12,10 +18,8 @@ const Currency = () => {
 
   function createAccount() {
     const account_number = "024" + Math.random().toString().slice(2, 11);
-    auth_api
-      .post(
-        `account/create_payment_account?userId=${info?.user.id}&account_number=${account_number}`
-      )
+
+    createPaymentAccount(info?.user.id, account_number)
       .then((res) => {
         window.location.reload();
       })
@@ -37,8 +41,8 @@ const Currency = () => {
       alert("charge less than $10,000,000");
       return;
     }
-    auth_api
-      .patch(`account/charge?userId=${info?.user.id}&amount=${amount}`)
+
+    charge_money(info?.user.id, amount)
       .then((res) => {
         setAccount(res?.data[0]);
         setAmount(0);

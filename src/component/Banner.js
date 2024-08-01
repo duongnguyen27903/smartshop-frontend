@@ -5,20 +5,36 @@ import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
   const [data, setData] = useState();
+  const max_banner_image = 8;
   const navigate = useNavigate();
-  const [chose, setChose] = useState(1);
+  const [chose, setChose] = useState(0);
+
   useEffect(() => {
     getBestSeller()
       .then((res) => {
         setData(res.data);
+        console.log(data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    const auto_sliding = setInterval(() => {
+      setChose((prev) => {
+        if (data && prev >= data.length - 1) return 0;
+        return prev + 1;
+      });
+    }, 2000);
+
+    return () => clearInterval(auto_sliding);
+  }, []);
+
   if (data)
     return (
       <div className="relative z-0 w-full h-full overflow-hidden">
+        {console.log(chose)}
         <img
           onClick={() => {
             navigate(`${data[chose]?.brandid}/${data[chose]?.id}`);

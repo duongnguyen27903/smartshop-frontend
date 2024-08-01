@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { api, auth_api, getDetailProduct } from "../api/api";
+import {
+  api,
+  auth_api,
+  buyProduct,
+  getDetailProduct,
+  saveCart,
+} from "../api/api";
 import { errorform } from "../authen/SignIn";
 const Product = () => {
   const { id } = useParams();
@@ -41,20 +47,7 @@ const Product = () => {
   }
 
   function handleAddToCart() {
-    api
-      .post(
-        "cart/save_cart",
-        {
-          productId: Number(id),
-          userId: info?.user.id,
-          amount: amount,
-        },
-        {
-          headers: {
-            Authorization: "Bearer " + info?.accessToken,
-          },
-        }
-      )
+    saveCart(id, info?.user.id, amount)
       .then((res) => {
         alert(res.data.message);
       })
@@ -64,12 +57,7 @@ const Product = () => {
   }
 
   function handlePurchase() {
-    auth_api
-      .post("account/buy_product", {
-        productId: Number(id),
-        userId: info?.user.id,
-        product_amount: amount,
-      })
+    buyProduct(id, info?.user.id, amount)
       .then((res) => {
         alert(res.data);
         window.location.reload();

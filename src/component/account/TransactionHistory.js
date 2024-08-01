@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { auth_api } from "../../api/api";
+import { auth_api, getTransactionHistory } from "../../api/api";
 import { errorform } from "../../authen/SignIn";
 
 const TransactionHistory = () => {
@@ -12,10 +12,7 @@ const TransactionHistory = () => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    auth_api
-      .get(
-        `account/get_transaction_histories?userId=${info?.user.id}&page=${page}`
-      )
+    getTransactionHistory(info?.user.id, page)
       .then((res) => {
         setData(res.data.data);
         setPages(res.data.pages);

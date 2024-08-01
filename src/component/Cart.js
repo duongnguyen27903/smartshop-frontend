@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../api/api";
+import { api, deleteCart, getCart } from "../api/api";
 import { errorform } from "../authen/SignIn";
 import "../App.css";
 
@@ -11,12 +11,7 @@ const Cart = () => {
   if (user) info = JSON.parse(user);
   const [data, setData] = useState([]);
   useEffect(() => {
-    api
-      .get(`cart/get_cart?id=${info?.user.id}`, {
-        headers: {
-          Authorization: "Bearer " + info?.accessToken,
-        },
-      })
+    getCart(info?.user.id)
       .then((res) => {
         setData(res.data);
       })
@@ -47,12 +42,7 @@ const Item = ({ item, info }) => {
 
   function handleDeleteCart() {
     if (window.confirm("Are your sure to delete")) {
-      api
-        .delete(`cart/delete_cart?id=${cart_id}&user=${info?.user.id}`, {
-          headers: {
-            Authorization: "Bearer " + info?.accessToken,
-          },
-        })
+      deleteCart(cart_id, info?.user.id)
         .then((res) => {
           window.location.reload();
         })
