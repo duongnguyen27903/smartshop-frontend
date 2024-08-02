@@ -52,7 +52,7 @@ const Product = () => {
         alert(res.data.message);
       })
       .catch((err) => {
-        alert(errorform(err));
+        alert("You must login to use cart");
       });
   }
 
@@ -63,7 +63,7 @@ const Product = () => {
         window.location.reload();
       })
       .catch((err) => {
-        alert(errorform(err));
+        alert("Error happened. Login again");
       });
   }
 

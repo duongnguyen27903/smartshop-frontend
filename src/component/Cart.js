@@ -47,7 +47,7 @@ const Item = ({ item, info }) => {
           window.location.reload();
         })
         .catch((err) => {
-          alert(errorform(err));
+          alert("Try again");
         });
     }
   }

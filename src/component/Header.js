@@ -21,7 +21,7 @@ const Header = () => {
         </span>
       </div>
       <div className="flex flex-row place-items-center h-full grow">
-        <SearchBar className={" w-1/2"} />
+        <SearchBar className={`w-1/2 hidden md:block lg:block`} />
         <UserManagement className={"grow  h-full"} />
       </div>
     </div>
